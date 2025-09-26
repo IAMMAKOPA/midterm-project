@@ -22,21 +22,28 @@ const GameScreen = () => {
   });
 
   return (
-    <div className="game-screen">
-      <div className="stats-bar">
-        <span><strong>Hunter:</strong> {playerName}</span>
-        <span className={hp < 30 ? 'hp-low' : ''}><strong>HP:</strong> {hp}</span>
-        <span><strong>Inventory:</strong> {inventory.join(', ') || 'None'}</span>
+    // The main container now looks like a game screen in the woods
+    <div className="game-screen rpg-container">
+      
+      {/* Top HUD/Stats Bar - styled like a classic RPG overlay */}
+      <div className="stats-bar rpg-stats-bar">
+        <span className="rpg-stat-item"><strong>Hunter:</strong> {playerName}</span>
+        {/* HP styling remains, but is now inside the RPG bar style */}
+        <span className={`rpg-stat-item ${hp < 30 ? 'hp-low' : ''}`}><strong> 💓HP:</strong> {hp}</span>
+        <span className="rpg-stat-item"><strong> 🎒Inventory:</strong> {inventory.join(', ') || 'None'}</span>
       </div>
 
-      <div className="story-text">
+      {/* The main story text box - styled like a classic RPG Maker message box */}
+      <div className="story-text rpg-text-box">
         <p>{currentScene.text}</p>
       </div>
 
-      <div className="choices-container">
+      {/* Choices Container - positioned and styled for RPG menus */}
+      <div className="choices-container rpg-choices-container">
         {/* We now map over the *filtered* list of choices */}
         {availableChoices.map((choice, index) => (
-          <ChoiceButton key={index} choice={choice} />
+          // ChoiceButton would also need a class like 'rpg-choice-button' inside its component
+          <ChoiceButton key={index} choice={choice} /> 
         ))}
       </div>
     </div>

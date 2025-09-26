@@ -1,38 +1,339 @@
-.App {
-  text-align: center;
+/*
+ * --------------------------------
+ * 1. FONT & BASE STYLES
+ * --------------------------------
+ * Note: You'll need to import a pixelated font like 'Press Start 2P' 
+ * or 'Pixel Emulator' for the best effect.
+ */
+
+:root {
+  /* RPG Maker Palettes */
+  --rpg-bg-dark: #121212; /* Very dark/black */
+  --rpg-bg-box: rgba(0, 0, 0, 0.85); /* Semi-transparent for dialog boxes */
+  --rpg-text-primary: #e0e0e0; /* Off-white for general text */
+  --rpg-text-accent: #f8c000; /* Gold/Yellow for names/highlights */
+  --rpg-border-color: #555555; /* Dark gray border */
+  --rpg-hp-low: #ff3333; /* Red for low HP */
+  --rpg-pixel-size: 2px; /* For consistent pixel borders/shadows */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.rpg-container {
+  /* This is the 'woods' background */
+  background: url(wpw.jpg) no-repeat center center fixed;
+  background-size: cover;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  padding: 20px;
+  font-family: 'Press Start 2P', monospace;
+  color: var(--rpg-text-primary);
+  text-shadow: var(--rpg-pixel-size) var(--rpg-pixel-size) #000; /* Simple text shadow for better contrast */
+}
+/*
+ * --------------------------------
+ * 2. STATS BAR (HUD)
+ * --------------------------------
+ */
+
+.rpg-stats-bar {
+  width: 95%;
+  max-width: 900px;
+  background: var(--rpg-bg-box);
+  border: 4px solid var(--rpg-border-color);
+  box-shadow: 0 0 0 2px black, 0 0 10px rgba(0, 0, 0, 0.7); /* Double border/shadow effect */
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px; /* Small, pixelated font size */
+  text-transform: uppercase;
 }
 
-.App-link {
-  color: #61dafb;
+.rpg-stat-item strong {
+  color: var(--rpg-text-accent);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.hp-low {
+  color: var(--rpg-hp-low) !important;
+}
+
+/*
+ * --------------------------------
+ * 3. STORY TEXT BOX
+ * --------------------------------
+ */
+
+.rpg-text-box {
+  width: 95%;
+  max-width: 900px;
+  min-height: 150px;
+  background: var(--rpg-bg-box);
+  border: 4px solid var(--rpg-border-color);
+  box-shadow: 0 0 0 2px black, inset 0 0 0 2px rgba(255, 255, 255, 0.1); /* Inner shadow for depth */
+  padding: 20px;
+  margin-bottom: 30px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.rpg-text-box p {
+  margin: 0;
+  /* Simulates the character-by-character typing of classic RPGs by setting character spacing */
+  letter-spacing: 0.1em; 
+}
+
+/*
+ * --------------------------------
+ * 4. CHOICES CONTAINER
+ * --------------------------------
+ */
+
+.rpg-choices-container {
+  width: 95%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+/*
+ * --------------------------------
+ * 5. CHOICE BUTTON (Style for the ChoiceButton component)
+ * --------------------------------
+ * You will need to add a class to your actual ChoiceButton component for these styles.
+ * E.g., <button className="rpg-choice-button">...</button>
+ */
+
+.rpg-choice-button {
+  background: var(--rpg-bg-box);
+  color: var(--rpg-text-primary);
+  border: 3px solid var(--rpg-border-color);
+  padding: 12px;
+  font-size: 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.1s;
+  text-shadow: none; /* Remove shadow for buttons */
+}
+
+.rpg-choice-button:hover,
+.rpg-choice-button:focus {
+  background: rgba(40, 40, 40, 0.95); /* Slightly brighter on hover */
+  border-color: var(--rpg-text-accent); /* Gold highlight */
+}
+
+/*
+ * --------------------------------
+ * 1. GLOBAL VARIABLES AND FONT
+ * --------------------------------
+ */
+
+:root {
+  /* RPG Maker Palettes */
+  --rpg-bg-dark: #121212; /* Very dark/black */
+  --rpg-bg-box: rgba(0, 0, 0, 0.85); /* Semi-transparent for dialog boxes */
+  --rpg-text-primary: #e0e0e0; /* Off-white for general text */
+  --rpg-text-accent: #f8c000; /* Gold/Yellow for highlights */
+  --rpg-border-color: #555555; /* Dark gray border */
+  --rpg-hp-low: #ff3333; /* Red for low HP */
+  --rpg-hp-victory: #33ff33; /* Green for success */
+  --rpg-pixel-size: 2px; /* For consistent pixel borders/shadows */
+}
+
+/* * Apply the aesthetic to the main container
+ * NOTE: Remember to import a pixelated font (e.g., 'Press Start 2P') 
+ *
+
+
+/*
+ * --------------------------------
+ * 2. GAMESCREEN: STATS BAR (HUD)
+ * --------------------------------
+ */
+
+.rpg-stats-bar {
+  width: 95%;
+  max-width: 900px;
+  background: var(--rpg-bg-box);
+  border: 4px solid var(--rpg-border-color);
+  box-shadow: 0 0 0 2px black, 0 0 10px rgba(0, 0, 0, 0.7);
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  text-transform: uppercase;
+}
+
+.rpg-stat-item strong {
+  color: var(--rpg-text-accent);
+}
+
+.hp-low {
+  color: var(--rpg-hp-low) !important;
+}
+
+
+/*
+ * --------------------------------
+ * 3. GAMESCREEN: STORY TEXT BOX
+ * --------------------------------
+ */
+
+.rpg-text-box {
+  width: 95%;
+  max-width: 900px;
+  background: var(--rpg-bg-box);
+  border: 4px solid var(--rpg-border-color);
+  box-shadow: 0 0 0 2px black, inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.rpg-text-box p {
+  margin: 0;
+  letter-spacing: 0.1em; /* Simulates typing effect */
+}
+
+
+/*
+ * --------------------------------
+ * 4. BUTTONS (Used for Choices and Restart)
+ * --------------------------------
+ */
+
+.rpg-choices-container {
+  width: 95%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px 0;
+}
+
+/* Style for ChoiceButton component and EndScreen restart button */
+.rpg-choice-button, /* Add this class to your ChoiceButton component */
+.rpg-button { 
+  background: var(--rpg-bg-box);
+  color: var(--rpg-text-primary);
+  border: 3px solid var(--rpg-border-color);
+  padding: 12px;
+  font-size: 12px;
+  cursor: pointer;
+  text-align: left; /* Left align for choice buttons */
+  transition: background-color 0.1s;
+  text-shadow: none;
+  font-family: 'Press Start 2P', monospace;
+  text-transform: uppercase;
+}
+
+/* Center the text for the restart button */
+.rpg-button {
+  text-align: center; 
+}
+
+.rpg-choice-button:hover,
+.rpg-choice-button:focus,
+.rpg-button:hover,
+.rpg-button:focus {
+  background: rgba(40, 40, 40, 0.95);
+  border-color: var(--rpg-text-accent);
+}
+
+
+/*
+ * --------------------------------
+ * 5. ENDSCREEN COMPONENTS
+ * --------------------------------
+ */
+
+.rpg-end-box {
+  width: 90%;
+  max-width: 600px;
+  background: var(--rpg-bg-box); 
+  border: 4px solid var(--rpg-border-color);
+  box-shadow: 0 0 0 2px black, 0 0 15px rgba(0, 0, 0, 0.9);
+  padding: 30px;
+  text-align: center;
+  margin-top: 10vh; 
+}
+
+.rpg-end-title {
+  font-size: 20px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  border-bottom: 3px solid var(--rpg-border-color); 
+  padding-bottom: 10px;
+}
+
+/* Victory styling */
+.rpg-victory-box .rpg-end-title {
+  color: var(--rpg-hp-victory);
+}
+
+/* Game Over styling */
+.rpg-game-over-box .rpg-end-title {
+  color: var(--rpg-hp-low);
+}
+
+/* Text box style adjusted for EndScreen narrative */
+.rpg-end-text {
+  margin: 20px auto 30px;
+  min-height: 0; /* Override the min-height from the main text box */
+}
+
+/*
+ * --------------------------------
+ * START SCREEN STYLES
+ * --------------------------------
+ */
+
+/* Reuses rpg-end-box for the central panel structure */
+.rpg-start-box {
+  /* Simple margin adjustment if needed */
+  padding: 40px 30px; 
+}
+
+.rpg-start-box .rpg-end-title {
+    color: var(--rpg-text-accent); /* Highlight the title */
+}
+
+.rpg-start-text {
+    margin-bottom: 25px;
+}
+
+.rpg-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.rpg-input {
+    width: 90%;
+    max-width: 300px;
+    /* Styled like a prompt box */
+    background: var(--rpg-bg-box);
+    color: var(--rpg-text-primary);
+    border: 3px solid var(--rpg-border-color);
+    padding: 12px;
+    font-size: 12px;
+    font-family: 'Press Start 2P', monospace;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.rpg-input::placeholder {
+    color: var(--rpg-border-color); /* Dim placeholder text */
+}
+
+/* Ensure the button uses the existing style and is full width relative to the form */
+.rpg-form .rpg-button {
+    width: 90%;
+    max-width: 300px;
 }
