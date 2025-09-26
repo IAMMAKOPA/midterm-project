@@ -1,23 +1,34 @@
-import logo from './logo.svg';
+import React, { useContext } from 'react';
+import { GameContext } from './context/GameContext';
+import StartScreen from './components/StartScreen';
+import GameScreen from './components/GameScreen';
+import EndScreen from './components/EndScreen';
 import './App.css';
 
 function App() {
+  const { playerState } = useContext(GameContext);
+
+  const renderScreen = () => {
+    switch (playerState.gameState) {
+      case 'playing':
+        return <GameScreen />;
+      case 'gameOver':
+      case 'victory':
+        return <EndScreen />;
+      case 'start':
+      default:
+        return <StartScreen />;
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header>
+        <h1>Aswang Hunter</h1>
       </header>
+      <main className="container">
+        {renderScreen()}
+      </main>
     </div>
   );
 }
