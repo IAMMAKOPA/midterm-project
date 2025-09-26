@@ -2,16 +2,15 @@ import React, { createContext, useCallback } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 import storyData from '../data/story.json';
 
-// Export the context so other components can use it
+
 export const GameContext = createContext();
 
-// Define the default state for a new game
 const initialPlayerState = {
   playerName: '',
   hp: 100,
   inventory: [],
   currentSceneId: 'start',
-  gameState: 'start', // 'start', 'playing', 'gameOver', 'victory'
+  gameState: 'start', 
 };
 
 const GameProvider = ({ children }) => {
@@ -27,14 +26,13 @@ const GameProvider = ({ children }) => {
 
   const makeChoice = useCallback((choice) => {
     setPlayerState(currentState => {
-      // 1. Get the ID of the next scene from the choice
+      
       const nextSceneId = choice.to;
       const nextScene = storyData[nextSceneId];
 
       let newHp = currentState.hp;
       let newInventory = [...currentState.inventory];
 
-      // 2. Apply effects from the *new* scene's onArrive block
       if (nextScene.onArrive) {
         if (nextScene.onArrive.addItem && !newInventory.includes(nextScene.onArrive.addItem)) {
           newInventory.push(nextScene.onArrive.addItem);
@@ -44,7 +42,6 @@ const GameProvider = ({ children }) => {
         }
       }
 
-      // 3. Check for HP-loss game over condition
       if (newHp <= 0) {
         // Redirect to the dedicated HP game over scene
         const hpGameOverScene = storyData['gameOver_hp'];
@@ -57,14 +54,11 @@ const GameProvider = ({ children }) => {
         };
       }
 
-      // 4. Check if the new scene is an ending
-      let newGameState = 'playing'; // Default to 'playing'
+      let newGameState = 'playing'; 
       if (nextScene.isEnding) {
-        // Determine if it's a victory or game over based on the scene ID
         newGameState = nextSceneId.includes('good') ? 'victory' : 'gameOver';
       }
 
-      // 5. Update the state with all the new information
       return {
         ...currentState,
         hp: newHp,

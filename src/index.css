@@ -1,56 +1,43 @@
-/*
- * Horrific Style Sheet - A dark and gritty theme for your RPG.
- * Inspired by classic horror and fantasy games.
- */
-
-/* The very essence of the abyss. */
 body {
   margin: 0;
-  background-color: #0d0d0d; /* A deep, inky black */
-  color: #c0b9a8; /* A faded parchment or bone color */
-  font-family: 'Times New Roman', serif; /* Classic, unsettling font */
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-crosshair"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>'), auto; /* A custom cursor that feels like a targeting reticle or crosshair */
+  background-color: #0d0d0d;
+  color: #c0b9a8;
+  font-family: 'Times New Roman', serif;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-crosshair"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>'), auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* For whispered secrets and cryptic runes. */
 code {
   font-family: 'Courier New', monospace;
-  color: #4CAF50; /* A sickly green, like ancient glow-in-the-dark goo */
-  background-color: #1a1a1a; /* A slightly lighter black for contrast */
+  color: #4CAF50;
+  background-color: #1a1a1a;
   padding: 2px 4px;
   border-radius: 3px;
-  border: 1px solid #333; /* A faint border for a grimoire feel */
+  border: 1px solid #333;
 }
 
-/* A general effect to add a subtle, grainy texture. */
-/* This can be applied to various elements for an older, worn feel. */
 .rpg-texture {
   box-shadow: 0 0 10px rgba(0,0,0,0.5) inset;
 }
 
-/* For hover effects on links and buttons, simulating blood or a ghostly glow. */
 a:hover, button:hover {
-  color: #8B0000; /* Dark red, like dried blood */
-  text-shadow: 0 0 5px #8B0000; /* A faint, bloody glow */
+  color: #8B0000;
+  text-shadow: 0 0 5px #8B0000;
   transition: color 0.3s, text-shadow 0.3s;
 }
 
-/* A subtle flicker animation to mimic candlelight or unstable magic. */
 @keyframes flicker {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.95; }
 }
 
-/* A subtle breathing or pulsating effect. */
 @keyframes pulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.02); }
   100% { transform: scale(1); }
 }
 
-/* Applying the animations to give a sense of unease. */
 h1, h2, h3 {
   animation: flicker 4s infinite;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
